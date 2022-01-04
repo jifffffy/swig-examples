@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+  manifest {
+    attributes(
+      // 'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+      'Main-Class': 'io.jiffy.example.Runme'
+    )
+  }
+}
+
+dependencies {
+}
