@@ -14,6 +14,30 @@
 #endif
 
 
+
+#ifdef __cplusplus
+/* SwigValueWrapper is described in swig.swg */
+template<typename T> class SwigValueWrapper {
+  struct SwigMovePointer {
+    T *ptr;
+    SwigMovePointer(T *p) : ptr(p) { }
+    ~SwigMovePointer() { delete ptr; }
+    SwigMovePointer& operator=(SwigMovePointer& rhs) { T* oldptr = ptr; ptr = 0; delete oldptr; ptr = rhs.ptr; rhs.ptr = 0; return *this; }
+  } pointer;
+  SwigValueWrapper& operator=(const SwigValueWrapper<T>& rhs);
+  SwigValueWrapper(const SwigValueWrapper<T>& rhs);
+public:
+  SwigValueWrapper() : pointer(0) { }
+  SwigValueWrapper& operator=(const T& t) { SwigMovePointer tmp(new T(t)); pointer = tmp; return *this; }
+  operator T&() const { return *pointer.ptr; }
+  T *operator&() { return pointer.ptr; }
+};
+
+template <typename T> T SwigValueInit() {
+  return T();
+}
+#endif
+
 /* -----------------------------------------------------------------------------
  *  This section contains generic SWIG labels for method/variable
  *  declarations/attributes, and other compiler dependent labels.
@@ -196,10 +220,10 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
   while (except_ptr->code != code && except_ptr->code)
     except_ptr++;
 
-  (*jenv)->ExceptionClear(jenv);
-  excep = (*jenv)->FindClass(jenv, except_ptr->java_exception);
+  jenv->ExceptionClear();
+  excep = jenv->FindClass(except_ptr->java_exception);
   if (excep)
-    (*jenv)->ThrowNew(jenv, excep, msg);
+    jenv->ThrowNew(excep, msg);
 }
 
 
@@ -208,88 +232,130 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 #define SWIG_contract_assert(nullreturn, expr, msg) if (!(expr)) {SWIG_JavaThrowException(jenv, SWIG_JavaIllegalArgumentException, msg); return nullreturn; } else
 
 
+#include <string>
 
-int print_args(char **argv) {
-  int i = 0;
-  while (argv[i]) {
-    printf("argv[%d] = %s\n", i, argv[i]);
-    i++;
+
+    #include <iostream>
+using namespace std;
+class Vehicle {
+public:
+  virtual void start() = 0;
+};
+
+class Ambulance : public Vehicle {
+  string vol;
+public:
+  Ambulance(string volume) : vol(volume) {}
+  virtual void start() {
+    cout << "Ambulance started" << endl;
   }
-  return i;
-}
+  void sound_siren() {
+    cout << vol << " siren sounded!" << endl;
+  }
+};
 
-char **get_args() {
-  static char *values[] = { "Dave", "Mike", "Susan", "John", "Michelle", 0};
-  return &values[0];
+Vehicle *vehicle_factory() {
+  return new Ambulance("Very loud");
 }
-
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-SWIGEXPORT jint JNICALL Java_io_jiffy_example_ConvertingJavaStringArraysToCharxxJNI_print_1args(JNIEnv *jenv, jclass jcls, jobjectArray jarg1) {
-  jint jresult = 0 ;
-  char **arg1 = (char **) 0 ;
-  jint size1 ;
-  int result;
+SWIGEXPORT void JNICALL Java_io_jiffy_example_AddingJavaDowncastsToPolymorphicReturnTypesJNI_Vehicle_1start(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  Vehicle *arg1 = (Vehicle *) 0 ;
   
   (void)jenv;
   (void)jcls;
-  {
-    int i = 0;
-    size1 = (*jenv)->GetArrayLength(jenv, jarg1);
-    arg1 = (char **) malloc((size1+1)*sizeof(char *));
-    /* make a copy of each string */
-    for (i = 0; i<size1; i++) {
-      jstring j_string = (jstring)(*jenv)->GetObjectArrayElement(jenv, jarg1, i);
-      const char * c_string = (*jenv)->GetStringUTFChars(jenv, j_string, 0);
-      arg1[i] = malloc((strlen(c_string)+1)*sizeof(char));
-      strcpy(arg1[i], c_string);
-      (*jenv)->ReleaseStringUTFChars(jenv, j_string, c_string);
-      (*jenv)->DeleteLocalRef(jenv, j_string);
-    }
-    arg1[i] = 0;
-  }
-  result = (int)print_args(arg1);
-  jresult = (jint)result; 
-  {
-    int i;
-    for (i=0; i<size1-1; i++)
-    free(arg1[i]);
-    free(arg1);
-  }
+  (void)jarg1_;
+  arg1 = *(Vehicle **)&jarg1; 
+  (arg1)->start();
+}
+
+
+SWIGEXPORT void JNICALL Java_io_jiffy_example_AddingJavaDowncastsToPolymorphicReturnTypesJNI_delete_1Vehicle(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  Vehicle *arg1 = (Vehicle *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(Vehicle **)&jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_jiffy_example_AddingJavaDowncastsToPolymorphicReturnTypesJNI_new_1Ambulance(JNIEnv *jenv, jclass jcls, jstring jarg1) {
+  jlong jresult = 0 ;
+  std::string arg1 ;
+  Ambulance *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  if(!jarg1) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null string");
+    return 0;
+  } 
+  const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
+  if (!arg1_pstr) return 0;
+  (&arg1)->assign(arg1_pstr);
+  jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
+  result = (Ambulance *)new Ambulance(arg1);
+  *(Ambulance **)&jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT jobjectArray JNICALL Java_io_jiffy_example_ConvertingJavaStringArraysToCharxxJNI_get_1args(JNIEnv *jenv, jclass jcls) {
-  jobjectArray jresult = 0 ;
-  char **result = 0 ;
+SWIGEXPORT void JNICALL Java_io_jiffy_example_AddingJavaDowncastsToPolymorphicReturnTypesJNI_Ambulance_1start(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  Ambulance *arg1 = (Ambulance *) 0 ;
   
   (void)jenv;
   (void)jcls;
-  result = (char **)get_args();
-  {
-    int i;
-    int len=0;
-    jstring temp_string;
-    const jclass clazz = (*jenv)->FindClass(jenv, "java/lang/String");
-    
-    while (result[len]) len++;
-    jresult = (*jenv)->NewObjectArray(jenv, len, clazz, NULL);
-    /* exception checking omitted */
-    
-    for (i=0; i<len; i++) {
-      temp_string = (*jenv)->NewStringUTF(jenv, *result++);
-      (*jenv)->SetObjectArrayElement(jenv, jresult, i, temp_string);
-      (*jenv)->DeleteLocalRef(jenv, temp_string);
-    }
-  }
+  (void)jarg1_;
+  arg1 = *(Ambulance **)&jarg1; 
+  (arg1)->start();
+}
+
+
+SWIGEXPORT void JNICALL Java_io_jiffy_example_AddingJavaDowncastsToPolymorphicReturnTypesJNI_Ambulance_1sound_1siren(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  Ambulance *arg1 = (Ambulance *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(Ambulance **)&jarg1; 
+  (arg1)->sound_siren();
+}
+
+
+SWIGEXPORT void JNICALL Java_io_jiffy_example_AddingJavaDowncastsToPolymorphicReturnTypesJNI_delete_1Ambulance(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  Ambulance *arg1 = (Ambulance *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(Ambulance **)&jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_io_jiffy_example_AddingJavaDowncastsToPolymorphicReturnTypesJNI_vehicle_1factory(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  Vehicle *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (Vehicle *)vehicle_factory();
+  *(Vehicle **)&jresult = result; 
   return jresult;
 }
 
+
+SWIGEXPORT jlong JNICALL Java_io_jiffy_example_AddingJavaDowncastsToPolymorphicReturnTypesJNI_Ambulance_1SWIGUpcast(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+    jlong baseptr = 0;
+    (void)jenv;
+    (void)jcls;
+    *(Vehicle **)&baseptr = *(Ambulance **)&jarg1;
+    return baseptr;
+}
 
 #ifdef __cplusplus
 }

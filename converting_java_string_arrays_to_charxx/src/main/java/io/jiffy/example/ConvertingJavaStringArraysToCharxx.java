@@ -8,13 +8,13 @@
 
 package io.jiffy.example;
 
-public class converting_java_string_arrays_to_charxx {
+public class ConvertingJavaStringArraysToCharxx {
   public static int print_args(String[] argv) {
-    return converting_java_string_arrays_to_charxxJNI.print_args(argv);
+    return ConvertingJavaStringArraysToCharxxJNI.print_args(argv);
   }
 
   public static String[] get_args() {
-    return converting_java_string_arrays_to_charxxJNI.get_args();
+    return ConvertingJavaStringArraysToCharxxJNI.get_args();
   }
 
 }

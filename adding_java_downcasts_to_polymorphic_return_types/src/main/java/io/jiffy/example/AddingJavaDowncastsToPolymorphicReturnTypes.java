@@ -8,7 +8,10 @@
 
 package io.jiffy.example;
 
-public class converting_java_string_arrays_to_charxxJNI {
-  public final static native int print_args(String[] jarg1);
-  public final static native String[] get_args();
+public class AddingJavaDowncastsToPolymorphicReturnTypes {
+  public static Vehicle vehicle_factory() {
+    long cPtr = AddingJavaDowncastsToPolymorphicReturnTypesJNI.vehicle_factory();
+    return (cPtr == 0) ? null : new Vehicle(cPtr, false);
+  }
+
 }

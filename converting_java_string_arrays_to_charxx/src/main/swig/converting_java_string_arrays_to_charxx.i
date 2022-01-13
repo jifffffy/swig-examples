@@ -1,4 +1,4 @@
-%module converting_java_string_arrays_to_charxx
+%module ConvertingJavaStringArraysToCharxx
 /* This tells SWIG to treat char ** as a special case when used as a parameter
    in a function call */
 %typemap(in) char ** (jint size) {
