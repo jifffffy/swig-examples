@@ -4,3 +4,5 @@
 # Ignore Gradle build output directory
 build
 cmake-build-debug
+*/bin
+*/build

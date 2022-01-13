@@ -8,3 +8,6 @@
  */
 
 rootProject.name = 'cmake-swig-java-gradle'
+include 'clazz'
+include 'special_variable'
+include 'constants'
