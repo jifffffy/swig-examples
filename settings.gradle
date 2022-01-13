@@ -9,5 +9,5 @@
 
 rootProject.name = 'cmake-swig-java-gradle'
 include 'clazz'
-include 'special_variable'
+include 'converting_java_string_arrays_to_charxx'
 include 'constants'

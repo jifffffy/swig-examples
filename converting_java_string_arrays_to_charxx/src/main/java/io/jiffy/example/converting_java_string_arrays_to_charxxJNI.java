@@ -8,5 +8,7 @@
 
 package io.jiffy.example;
 
-public class special_variable {
+public class converting_java_string_arrays_to_charxxJNI {
+  public final static native int print_args(String[] jarg1);
+  public final static native String[] get_args();
 }

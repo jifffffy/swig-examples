@@ -2,7 +2,7 @@
 
 ## Introduction
 
-A gradle project with the CMake build system using the CLion IDE.
+A gradle project with the CMake build system using the Vscode IDE.
 
 ## Build instructions
 
