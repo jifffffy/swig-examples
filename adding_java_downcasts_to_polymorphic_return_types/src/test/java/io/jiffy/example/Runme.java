@@ -17,7 +17,7 @@ public class Runme {
     }
 
     public static void main(String[] args) {
-        Vehice vehice = AddingJavaDowncastsToPolymorphicReturnTypes.vehicle_factory();
+        Vehicle vehicle = AddingJavaDowncastsToPolymorphicReturnTypes.vehicle_factory();
         vehicle.start();
 
         Ambulance ambulance = (Ambulance) vehicle;
