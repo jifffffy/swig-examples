@@ -5,11 +5,11 @@ include(UseSWIG)
 
 set(CMAKE_SWIG_FLAGS -c++ -package io.jiffy.example -features autodoc=1)
 set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_SOURCE_DIR}/src/main/java/io/jiffy/example)
-set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/src/main/swig/Constants.i PROPERTIES CPLUSPLUS ON)
+set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/src/main/swig/constants.i PROPERTIES CPLUSPLUS ON)
 
 swig_add_library(constants
         LANGUAGE Java
-        SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/main/swig/Constants.i)
+        SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/main/swig/constants.i)
 target_include_directories(constants PRIVATE
         include
         ${JNI_INCLUDE_DIRS}

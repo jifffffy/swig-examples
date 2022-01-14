@@ -48,4 +48,9 @@ public class Ambulance extends Vehicle {
     AddingJavaDowncastsToPolymorphicReturnTypesJNI.Ambulance_sound_siren(swigCPtr, this);
   }
 
+  public static Ambulance dynamic_cast(Vehicle vehicle) {
+    long cPtr = AddingJavaDowncastsToPolymorphicReturnTypesJNI.Ambulance_dynamic_cast(Vehicle.getCPtr(vehicle), vehicle);
+    return (cPtr == 0) ? null : new Ambulance(cPtr, false);
+  }
+
 }

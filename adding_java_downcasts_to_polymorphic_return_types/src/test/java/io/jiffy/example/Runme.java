@@ -20,7 +20,7 @@ public class Runme {
         Vehicle vehicle = AddingJavaDowncastsToPolymorphicReturnTypes.vehicle_factory();
         vehicle.start();
 
-        Ambulance ambulance = (Ambulance) vehicle;
+        Ambulance ambulance = Ambulance.dynamic_cast(vehicle);
         ambulance.sound_siren();
     }
 

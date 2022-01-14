@@ -14,6 +14,7 @@ public class AddingJavaDowncastsToPolymorphicReturnTypesJNI {
   public final static native long new_Ambulance(String jarg1);
   public final static native void Ambulance_start(long jarg1, Ambulance jarg1_);
   public final static native void Ambulance_sound_siren(long jarg1, Ambulance jarg1_);
+  public final static native long Ambulance_dynamic_cast(long jarg1, Vehicle jarg1_);
   public final static native void delete_Ambulance(long jarg1);
   public final static native long vehicle_factory();
   public final static native long Ambulance_SWIGUpcast(long jarg1);
